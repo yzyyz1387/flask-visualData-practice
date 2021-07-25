@@ -1,10 +1,10 @@
 <!doctype html>
 <html lang="zh_CN">
-  <head>
+<head>
     <title>可视化数据-词云</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
+
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="static/asstes/fonts/icomoon/style.css">
 
@@ -23,91 +23,108 @@
     <link rel="stylesheet" href="static/asstes/css/aos.css">
 
     <link rel="stylesheet" href="static/asstes/css/style.css">
-    
-  </head>
-  <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
 
-  
+</head>
+<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
 
-  <div id="overlayer"></div>
-  <div class="loader">
+
+<div id="overlayer"></div>
+<div class="loader">
     <div class="spinner-border text-primary" role="status">
-      <span class="sr-only">Loading...</span>
+        <span class="sr-only">Loading...</span>
     </div>
-  </div>
+</div>
 
 
-  <div class="site-wrap">
+<div class="site-wrap">
 
     <div class="site-mobile-menu site-navbar-target">
-      <div class="site-mobile-menu-header">
-        <div class="site-mobile-menu-close mt-3">
-          <span class="icon-close2 js-menu-toggle"></span>
+        <div class="site-mobile-menu-header">
+            <div class="site-mobile-menu-close mt-3">
+                <span class="icon-close2 js-menu-toggle"></span>
+            </div>
         </div>
-      </div>
-      <div class="site-mobile-menu-body"></div>
+        <div class="site-mobile-menu-body"></div>
     </div>
-   
+
     <header class="site-navbar py-4 js-sticky-header site-navbar-target" role="banner">
 
-      <div class="container">
-        <div class="row align-items-center justify-content-center">
+        <div class="container">
+            <div class="row align-items-center justify-content-center">
 
-          <div class="col-4">
-            <h1 class="m-0 site-logo"><a href="index.html">Visual Data</a></h1>
-          </div>
+                <div class="col-4">
+                    <h1 class="m-0 site-logo"><a href="index.html">Visual Data</a></h1>
+                </div>
 
-          <div class="col-8">
-            <nav class="site-navigation position-relative text-right" role="navigation">
-              <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
-                <li><a href="/" class="nav-link">主页</a></li>
-                <li><a href="/infor" class="nav-link">信息</a></li>
-                <li><a href="/rate" class="nav-link">评分</a></li>
-                <li><a href="/word" class="nav-link">词云</a></li>
-                <li><a href="/team" class="nav-link">关于</a></li>
+                <div class="col-8">
+                    <nav class="site-navigation position-relative text-right" role="navigation">
+                        <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
+                            <li><a href="/" class="nav-link">主页</a></li>
+                            <li><a href="/infor" class="nav-link">信息</a></li>
+                            <li><a href="/rate" class="nav-link">评分</a></li>
+                            <li><a href="/word" class="nav-link">词云</a></li>
+                             <li><a href="/inmsg" class="nav-link">留言</a></li>
+                            <li><a href="/team" class="nav-link">关于</a></li>
 
-              </ul>
-            </nav>
+                        </ul>
+                    </nav>
 
 
-            <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle float-right"><span class="icon-menu h3"></span></a>
+                    <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle float-right"><span
+                            class="icon-menu h3"></span></a>
 
-          </div>
+                </div>
 
-        
+
+            </div>
         </div>
-      </div>
-      
+
     </header>
 
 
 
-
-
     <div class="site-section" id="about-section">
-      <div class="container">
-        <div class="row ">
-          <div class="col-12 mb-4 position-relative">
-            <h2 class="section-title">词云</h2>
-          </div>
-                        <p data-aos="fade-up" data-aos-delay="200" style="width:100%;text-align: center;"><a href="/team" class="btn smoothscroll btn-primary">前往关于页</a>
-                            </p>
-          <div class="col-lg-4">
-            <p>豆瓣用户每天都在对“看过”的电影进行“很差”到“力荐”的评价，豆瓣根据每部影片看过的人数以及该影片所得的评价等综合数据，豆瓣官网通过算法分析产生豆瓣电影 Top 250。本项目对其数据进行爬取。</p>
-          </div>
-          <div class="col-lg-4">
-            <img src="static/asstes/word.jpg" alt="Image" class="img-fluid">
-          </div>
-          <div class="col-lg-4">
-            <p>使用WordCloud,根据250部电影的一句话描述生成了词频5527的词云图</p>
-          </div>
+        <div class="container">
+            <div class="row ">
+                <style type="text/css">
+                        .btn {
+                            margin-top: 15px
+                        }
 
-          
+                        {# ↑↑↑↑  按钮上下间隔 ↑↑↑↑ #}
+                    </style>
+                <div style="text-align: center;width: 100%;padding-top: 100px">
+                <p data-aos="fade-up" data-aos-delay="200" style="">
+                    <a href="/" class="btn smoothscroll btn-primary">首页</a>
+                    <a href="/infor" class="btn smoothscroll btn-primary">信息</a>
+                    <a href="/rate" class="btn smoothscroll btn-primary">评分</a>
+                    <a href="/inmsg" class="btn smoothscroll btn-primary">留言</a>
+                    <a href="/team" class="btn smoothscroll btn-primary">关于</a>
+            </p>
+                </div>
+                <div class="col-12 mb-4 position-relative">
+
+                    <h2 class="section-title">词云</h2>
+                </div>
+                <p data-aos="fade-up" data-aos-delay="200" style="width:100%;text-align: center;">
+
+                <div class="col-lg-4">
+                    <p>豆瓣用户每天都在对“看过”的电影进行“很差”到“力荐”的评价，豆瓣根据每部影片看过的人数以及该影片所得的评价等综合数据，豆瓣官网通过算法分析产生豆瓣电影 Top
+                        250。本项目对其数据进行爬取。</p>
+                </div>
+                <div class="col-lg-4">
+                    <img src="static/asstes/word.jpg" alt="Image" class="img-fluid">
+                </div>
+                <div class="col-lg-4">
+                    <p>使用WordCloud,根据250部电影的一句话描述生成了词频5527的词云图</p>
+                </div>
+
+
+            </div>
         </div>
-      </div>
     </div>
 
-  </div> <!-- .site-wrap -->
+</div> <!-- .site-wrap -->
 <div class="col-12 text-center">
     <p>
         <!-- Link back to cssmoban can't be removed. Template is licensed under CC BY 3.0. -->
@@ -120,18 +137,18 @@
         <!-- Link back to cssmoban can't be removed. Template is licensed under CC BY 3.0. -->
     </p>
 </div>
-  <script src="static/asstes/js/jquery-3.3.1.min.js"></script>
-  <script src="static/asstes/js/jquery-ui.js"></script>
-  <script src="static/asstes/js/popper.min.js"></script>
-  <script src="static/asstes/js/bootstrap.min.js"></script>
-  <script src="static/asstes/js/owl.carousel.min.js"></script>
-  <script src="static/asstes/js/jquery.easing.1.3.js"></script>
-  <script src="static/asstes/js/aos.js"></script>
-  <script src="static/asstes/js/jquery.fancybox.min.js"></script>
-  <script src="static/asstes/js/jquery.sticky.js"></script>
-  <script src="static/asstes/js/isotope.pkgd.min.js"></script>
+<script src="static/asstes/js/jquery-3.3.1.min.js"></script>
+<script src="static/asstes/js/jquery-ui.js"></script>
+<script src="static/asstes/js/popper.min.js"></script>
+<script src="static/asstes/js/bootstrap.min.js"></script>
+<script src="static/asstes/js/owl.carousel.min.js"></script>
+<script src="static/asstes/js/jquery.easing.1.3.js"></script>
+<script src="static/asstes/js/aos.js"></script>
+<script src="static/asstes/js/jquery.fancybox.min.js"></script>
+<script src="static/asstes/js/jquery.sticky.js"></script>
+<script src="static/asstes/js/isotope.pkgd.min.js"></script>
 
-  
-  <script src="static/asstes/js/main.js"></script>
-  </body>
+
+<script src="static/asstes/js/main.js"></script>
+</body>
 </html>

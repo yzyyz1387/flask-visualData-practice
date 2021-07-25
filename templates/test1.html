@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="zh_CN">
 <head>
-    <title>可视化数据-信息</title>
+    <title>可视化数据-留言</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -85,7 +85,7 @@
         <div class="container">
             <div class="row ">
                 <div class="col-12 mb-5 position-relative">
-                    <h2 class="section-title text-center mb-5">电影信息</h2>
+                    <h2 class="section-title text-center mb-5">留言墙</h2>
                 </div>
                 <p data-aos="fade-up" data-aos-delay="200" style="width:100%;text-align: center;">
                     <style type="text/css">
@@ -95,40 +95,43 @@
 
                         {# ↑↑↑↑  按钮上下间隔 ↑↑↑↑ #}
                     </style>
-                  <div style="text-align: center;width: 100%;padding-top: 100px">
+                                <div style="text-align: center;width: 100%;">
                 <p data-aos="fade-up" data-aos-delay="200" style="">
                     <a href="/" class="btn smoothscroll btn-primary">首页</a>
+                    <a href="/infor" class="btn smoothscroll btn-primary">信息</a>
                     <a href="/rate" class="btn smoothscroll btn-primary">评分</a>
                     <a href="/word" class="btn smoothscroll btn-primary">词云</a>
-                    <a href="/inmsg" class="btn smoothscroll btn-primary">留言</a>
                     <a href="/team" class="btn smoothscroll btn-primary">关于</a>
             </p>
                 </div>
 
-
-                {% for info in datalist %}
+                {# 循环语句#}
+                {% for v in smsg %}
                     <div class="col-md-6 mb-4" data-aos="fade-up" data-aos-delay="">
-                        <a href="{{ info[1] }}" style="color: #8a7a7a" target="_blank">
+
                             <div class="service d-flex h-100">
                                 <div class="svg-icon">
-                                    {#               <img src="{{ info[2] }}" title="{{ info[3] }}" alt="{{ info[0] }}" class="img-fluid">#}
-                                    <p>{{ info[0] }}</p>
+                                    {# 楼层#}
+                                    <p>{{ v[0] }}楼</p>
                                 </div>
                                 <div class="service-about">
-                                    <h3>{{ info[3] }}</h3>
-                                    <p>别名：{{ info[4] }}</p>
-                                    <p style="color: #000000">评分：{{ info[5] }}</p>
-                                    <p>评价人数：{{ info[6] }}</p>
-                                    <p>{{ info[7] }}</p>
-                                    <p>{{ info[8] }}</p>
+                                    {# 用户名#}
+                                    <h3>{{ v[1] }}</h3>
+                                    {# 留言内容#}
+                                    <p>{{ v[3] }}</p>
+                                    {#留言时间#}
+                                    <p style="font-size: 10px">留言于：{{ v[4] }}</p>
+
                                 </div>
                             </div>
-                        </a>
+
                     </div>
                 {% endfor %}
 
-            </div> <!-- .site-wrap -->
-            <div class="col-12 text-center">
+
+            </div>
+            <!-- .site-wrap -->
+            <div class="col-12 text-center" style="margin-bottom: 350px">
                 <p>
                     <!-- Link back to cssmoban can't be removed. Template is licensed under CC BY 3.0. -->
                     Copyright &copy;
@@ -139,6 +142,43 @@
                                              aria-hidden="true"></i> by yzyyz.top
                     <!-- Link back to cssmoban can't be removed. Template is licensed under CC BY 3.0. -->
                 </p>
+            </div>
+
+            {# 判断表单是否有空项 #}
+            <script type="text/javascript">
+                function myCheck() {
+                    for (var i = 0; i < document.msgform.elements.length - 1; i++) {
+                        if (document.msgform.elements[i].value == "") {
+                            alert("留言信息不能有空项哦~~");
+                            document.msgform.elements[i].focus();
+                            return false;
+                        }
+                    }
+                    return true;
+
+                }
+            </script>
+
+            <div class="inputmsg"
+                 style="position: fixed;bottom: 0;left: 0;z-index: 999999;width: 100%;height: 250px;background: rgb(56,152,252)">
+                <form method="post" action="{{ url_for('msg') }}" class="msgform" name="msgform"
+                      onSubmit="return myCheck()">
+                    <div style="margin: 25px" class="form-group">
+                        <input type="text" name="username" placeholder="输入昵称" minlength="2" maxlength="10" class="form-control"
+                               id="username" style="margin: 10px;"/>
+                        <input type="email" name="email" placeholder="输入邮箱" class="form-control" id="email"
+                               style="margin: 10px;"/>
+                        <input type="text" name="messg" placeholder="说点什么吧~~" minlength="5" maxlength="100" class="form-control"
+                               id="messg" style="margin: 10px;height: 50px"/>
+                        <div style="text-align: center">
+                            <input class="btn btn-primary" type="submit" value="提交"
+                                   onclick="isEmpty()"/>
+                        </div>
+                    </div>
+
+
+                </form>
+
             </div>
             <script src="static/asstes/js/jquery-3.3.1.min.js"></script>
             <script src="static/asstes/js/jquery-ui.js"></script>

@@ -89,7 +89,7 @@ def getData(baseurl):  #获取数据
             datalist.append(data)
             data=[]
     for items in datalist:
-        print(items)
+         print(items)
     return datalist
 
 
@@ -97,12 +97,12 @@ def getData(baseurl):  #获取数据
 def saveData(datalist,path):  #储存数据
     book = xlwt.Workbook(encoding='utf-8')
     sheet = book.add_sheet('豆瓣电影Top250',cell_overwrite_ok=True)
-    print("test")
+    # print("test")
     col=('链接','图片链接','中文名','外文名','评分','评价人数','描述','信息')
     for i in range(0,8):
         sheet.write(0,i,col[i]) #列名
     for i in range(0,250):
-        print("%d条"%i)
+        # print("%d条"%i)
         data=datalist[i]
         for j in range(0,8):
             sheet.write(i+1,j,data[j])
@@ -119,11 +119,12 @@ def saveData2(datalist,dbpath):
             if index == 4 or index==5:
                 continue
             data[index]='"'+data[index]+'"'
+            print(data)
         sql='''
             insert into movie250 (info_link,pic_link,name,ename,cnumber,rate,dec,info)
             values(%s)
             '''%",".join(data)
-        print(sql)
+        # print(sql)
         cur.execute(sql)
         conn.commit()
     conn.close()

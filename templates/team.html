@@ -70,6 +70,7 @@
                             <li><a href="/infor" class="nav-link">信息</a></li>
                             <li><a href="/rate" class="nav-link">评分</a></li>
                             <li><a href="/word" class="nav-link">词云</a></li>
+                             <li><a href="/inmsg" class="nav-link">留言</a></li>
                             <li><a href="/team" class="nav-link">关于</a></li>
                         </ul>
                     </nav>
@@ -81,26 +82,40 @@
     </header>
 
 
+</div> <!-- .site-wrap -->
+<div style="margin: 50px;padding-top: 100px;text-align: center"><h1 class="text-white" data-aos="fade-up"
+                                                                    data-aos-delay="">关于</h1>
+    <p class="lead text-white" data-aos="fade-up" data-aos-delay="100">
+        本网站为基于Python、Flask、Echarts、WordCloud等技术实现的的可视化数据分析的小项目（练手用）<br>下滑查看代码<br>下载项目源码：<a
+            href="https://github.com/yzyyz1387/flask-visualData-practice" target="_blank">Github</a>
+    </p>
+    <p class="lead text-white" data-aos="fade-up" data-aos-delay="100">
+        本人博客：<a target="_blank" href="https://yzyyz.top">https://yzyyz.top</a></p>
+    <p data-aos="fade-up" data-aos-delay="200" style="width:100%;text-align: center;">
+        <style type="text/css">
+            .btn {
+                margin-top: 15px
+            }
 
+            {# ↑↑↑↑  按钮上下间隔 ↑↑↑↑ #}
+        </style>
+                    <div style="text-align: center;width: 100%;padding-top: 5px">
+                <p data-aos="fade-up" data-aos-delay="200" style="">
+                    <a href="/" class="btn smoothscroll btn-primary">首页</a>
+                    <a href="/infor" class="btn smoothscroll btn-primary">信息</a>
+                    <a href="/rate" class="btn smoothscroll btn-primary">评分</a>
+                    <a href="/word" class="btn smoothscroll btn-primary">词云</a>
+                    <a href="/inmsg" class="btn smoothscroll btn-primary">留言</a>
+            </p>
+                </div>
+</div>
+<div class="col-md-6 mb-4" style="float: left;max-width: 50%;display: inline-block;">
 
+    <script>hljs.highlightAll();
+    hljs.initLineNumbersOnLoad();</script>
 
-    </div> <!-- .site-wrap -->
-       <div style="margin: 50px;padding-top: 100px;text-align: center">   <h1 class="text-white" data-aos="fade-up" data-aos-delay="">关于</h1>  <p class="lead text-white" data-aos="fade-up" data-aos-delay="100">
-                                本网站为基于Python、Flask、Echarts、WordCloud等技术实现的的可视化数据分析的小项目（练手用）<br>下滑查看代码<br>下载项目源码：<a
-                                    href="https://github.com/yzyyz1387/flask-visualData-practice" target="_blank">Github</a>
-                            </p>
-                            <p class="lead text-white" data-aos="fade-up" data-aos-delay="100">
-                                本人博客：<a target="_blank" href="https://yzyyz.top">https://yzyyz.top</a></p>
-<p data-aos="fade-up" data-aos-delay="200" style="width:100%;text-align: center;"><a href="/" class="btn smoothscroll btn-primary">回到首页</a>
-                            </p>
-   </div>
-    <div class="col-md-6 mb-4" style="float: left;max-width: 50%;display: inline-block;">
-
-        <script>hljs.highlightAll();
-        hljs.initLineNumbersOnLoad();</script>
-
-        <h3 style="margin-top: 25px">爬虫</h3>
-        <pre><code class="hljs language-python">from bs4 import BeautifulSoup       #网页解析，获取数据
+    <h3 style="color: #ffffff;margin-top: 25px">爬虫</h3>
+    <pre><code class="hljs language-python">from bs4 import BeautifulSoup       #网页解析，获取数据
 import urllib.request
 import xlwt         #excel操作
 import re           #正则，匹配文字
@@ -245,23 +260,28 @@ if __name__ == "__main__":
     print('爬取完毕')
           </code>
          </pre>
-    </div>
-    <!---pre2-->
+</div>
+<!---pre2-->
 
-    <div class="col-md-6 mb-4" style="margin: 0 auto;max-width: 50%;display: inline-block;">
-        <h3 style="margin-top: 25px">Flask</h3>
-        <pre><code class="hljs language-python">from flask import Flask,render_template
+<div class="col-md-6 mb-4" style="margin: 0 auto;max-width: 50%;display: inline-block;">
+    <h3 style="margin-top: 25px;color: #ffffff">Flask</h3>
+    <pre><code class="hljs language-python">from flask import Flask,render_template,request
 import sqlite3
+import os
+import time
 app = Flask(__name__)
 
+#主页
 @app.route('/')
 def hello_world():
     return render_template("/index.html")
 
+#主页
 @app.route('/index')
 def index():
-    return hello_world()
+    return render_template("/index.html")
 
+#信息页面
 @app.route('/infor')
 def infor():
     datalist=[]
@@ -279,6 +299,7 @@ def infor():
     conn.close()
     return render_template("/infor.html",datalist=datalist)
 
+#评分页面
 @app.route('/rate')
 def rate():
     datalist = []
@@ -301,46 +322,173 @@ def rate():
         count.append(data[1])
     return render_template("/rate.html",sc=sc,count=count)
 
+
+#词云页面
 @app.route('/word')
 def word():
     return render_template("/word.html")
 
+#关于页面
 @app.route('/team')
 def team():
     return render_template("/team.html")
 
+#留言页面
+@app.route("/msg",methods=['POST','GET'])
+def msg():
+    if request.method == 'POST':
+        msg = request.form
+        saveMsg(msg,'msg.db')
+        smsg=showmsg()
+        return render_template("test1.html",smsg=smsg)
+    else:
+        smsg=showmsg()
+        return render_template("test1.html",smsg=smsg)
+
+#留言页面
+@app.route('/inmsg')
+def inputmsg():
+    smsg=showmsg()
+    return render_template('test1.html',smsg=smsg)
+
+#创建留言数据库
+def createtable(path):
+    sql = '''
+       create table msgs
+       ( id integer primary key autoincrement,
+       username text,
+       email text,
+       msg text,
+       msgtime text
+       )
+       '''
+    conn = sqlite3.connect(path)
+    cur = conn.cursor()
+    cur.execute(sql)
+    conn.commit()
+    conn.close()
+
+#储存留言，传入表单信息和数据库路径
+def saveMsg(msglist,dbpath):
+    now = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+    #os判断数据库是否存在
+    #存在则追加数据
+    if os.path.exists('msg.db')==True:
+        # 连接数据库
+        conn = sqlite3.connect(dbpath)
+        cur=conn.cursor()
+        #建个空列表存数据
+        data=[]
+        for ii in msglist.items():
+            data.append(ii[1])
+        data.append(now)
+        for i in range(len(data)):
+            data[i]='"'+data[i]+'"'
+            #加双引号
+        sql='''
+                insert into msgs (username,email,msg,msgtime)
+                values(%s)
+                '''%",".join(data)
+        #上面用英文逗号连接要写入的内容
+        # print(sql)
+        #打印一手，测试用
+        cur.execute(sql)
+        conn.commit()
+        conn.close()
+    #没数据库时
+    else:
+        #createtable()创建数据库，其他的同上
+        createtable(dbpath)
+        conn = sqlite3.connect(dbpath)
+        cur=conn.cursor()
+        data=[]
+        for ii in msglist.items():
+            data.append(ii[1])
+        data.append(now)
+        for i in range(len(data)):
+            data[i]='"'+data[i]+'"'
+        sql='''
+                insert into msgs (username,email,msg,msgtime)
+                values(%s)
+                '''%",".join(data)
+        print(sql)
+        cur.execute(sql)
+        conn.commit()
+        conn.close()
+
+#显示留言
+def showmsg():
+    if os.path.exists('msg.db') == True:
+        #空列表存数据
+        datalist = []
+        #连接数据库
+        conn = sqlite3.connect("msg.db")
+        cur = conn.cursor()
+        sql = '''
+        select * from msgs
+        '''
+        data = cur.execute(sql)
+        #data出来是sqlite的对象，遍历，加入列表datalist
+        for item in data:
+            datalist.append(item)
+        conn.commit()
+        cur.close()
+        conn.commit()
+        conn.close()
+        smsgdata=datalist
+        #记得用了好几个datalist了，写个smsgdata用一下（ShowMsgData）
+        return smsgdata
+    else:
+        createtable('msg.db')
+        datalist = []
+        conn = sqlite3.connect("msg.db")
+        cur = conn.cursor()
+        sql = '''
+                select * from msgs
+                '''
+        data = cur.execute(sql)
+        for item in data:
+            datalist.append(item)
+        conn.commit()
+        cur.close()
+        conn.commit()
+        conn.close()
+        smsgdata = datalist
+        return smsgdata
+
 if __name__ == '__main__':
     app.run(debug='TRUE')
 
+
         </code></pre>
-    </div>
+</div>
 
-    <div class="col-12 text-center" style="float: left">
-        <p>
-            <!-- Link back to cssmoban can't be removed. Template is licensed under CC BY 3.0. -->
-            Copyright &copy;
-            <script>
-                document.write(new Date().getFullYear());
-            </script>
-            All rights reserved | <i class="icon-heart"
-                                     aria-hidden="true"></i> by yzyyz.top
-            <!-- Link back to cssmoban can't be removed. Template is licensed under CC BY 3.0. -->
-        </p>
-    </div>
+<div class="col-12 text-center" style="float: left">
+    <p>
+        <!-- Link back to cssmoban can't be removed. Template is licensed under CC BY 3.0. -->
+        Copyright &copy;
+        <script>
+            document.write(new Date().getFullYear());
+        </script>
+        All rights reserved | <i class="icon-heart"
+                                 aria-hidden="true"></i> by yzyyz.top
+        <!-- Link back to cssmoban can't be removed. Template is licensed under CC BY 3.0. -->
+    </p>
+</div>
 
-    <script src="static/asstes/js/jquery-3.3.1.min.js"></script>
-    <script src="static/asstes/js/jquery-ui.js"></script>
-    <script src="static/asstes/js/popper.min.js"></script>
-    <script src="static/asstes/js/bootstrap.min.js"></script>
-    <script src="static/asstes/js/owl.carousel.min.js"></script>
-    <script src="static/asstes/js/jquery.easing.1.3.js"></script>
-    <script src="static/asstes/js/aos.js"></script>
-    <script src="static/asstes/js/jquery.fancybox.min.js"></script>
-    <script src="static/asstes/js/jquery.sticky.js"></script>
-    <script src="static/asstes/js/isotope.pkgd.min.js"></script>
+<script src="static/asstes/js/jquery-3.3.1.min.js"></script>
+<script src="static/asstes/js/jquery-ui.js"></script>
+<script src="static/asstes/js/popper.min.js"></script>
+<script src="static/asstes/js/bootstrap.min.js"></script>
+<script src="static/asstes/js/owl.carousel.min.js"></script>
+<script src="static/asstes/js/jquery.easing.1.3.js"></script>
+<script src="static/asstes/js/aos.js"></script>
+<script src="static/asstes/js/jquery.fancybox.min.js"></script>
+<script src="static/asstes/js/jquery.sticky.js"></script>
+<script src="static/asstes/js/isotope.pkgd.min.js"></script>
 
 
-    <script src="static/asstes/js/main.js"></script>
+<script src="static/asstes/js/main.js"></script>
 </div>
 </div>
 </div>
